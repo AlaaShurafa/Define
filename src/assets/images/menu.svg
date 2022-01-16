@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="27.564" height="20.996" viewBox="0 0 27.564 20.996">
+  <g id="menu" transform="translate(0 -61)">
+    <g id="Group_68345" data-name="Group 68345" transform="translate(6.46 61)">
+      <g id="Group_68344" data-name="Group 68344">
+        <path id="Path_240552" data-name="Path 240552" d="M138.681,61H122.423a2.423,2.423,0,0,0,0,4.845h16.259a2.423,2.423,0,0,0,0-4.845Z" transform="translate(-120 -61)" fill="#e7e7e7"/>
+      </g>
+    </g>
+    <g id="Group_68347" data-name="Group 68347" transform="translate(6.46 69.076)">
+      <g id="Group_68346" data-name="Group 68346">
+        <path id="Path_240553" data-name="Path 240553" d="M138.681,211H122.423a2.423,2.423,0,1,0,0,4.845h16.259a2.423,2.423,0,1,0,0-4.845Z" transform="translate(-120 -211)" fill="#e7e7e7"/>
+      </g>
+    </g>
+    <g id="Group_68349" data-name="Group 68349" transform="translate(6.46 77.151)">
+      <g id="Group_68348" data-name="Group 68348">
+        <path id="Path_240554" data-name="Path 240554" d="M138.681,361H122.423a2.423,2.423,0,1,0,0,4.845h16.259a2.423,2.423,0,1,0,0-4.845Z" transform="translate(-120 -361)" fill="#e7e7e7"/>
+      </g>
+    </g>
+    <g id="Group_68351" data-name="Group 68351" transform="translate(0 61)">
+      <g id="Group_68350" data-name="Group 68350">
+        <path id="Path_240555" data-name="Path 240555" d="M2.423,61a2.423,2.423,0,1,0,2.423,2.423A2.425,2.425,0,0,0,2.423,61Z" transform="translate(0 -61)" fill="#e7e7e7"/>
+      </g>
+    </g>
+    <g id="Group_68353" data-name="Group 68353" transform="translate(0 69.076)">
+      <g id="Group_68352" data-name="Group 68352">
+        <path id="Path_240556" data-name="Path 240556" d="M2.423,211a2.423,2.423,0,1,0,2.423,2.423A2.425,2.425,0,0,0,2.423,211Z" transform="translate(0 -211)" fill="#e7e7e7"/>
+      </g>
+    </g>
+    <g id="Group_68355" data-name="Group 68355" transform="translate(0 77.151)">
+      <g id="Group_68354" data-name="Group 68354">
+        <path id="Path_240557" data-name="Path 240557" d="M2.423,361a2.423,2.423,0,1,0,2.423,2.423A2.425,2.425,0,0,0,2.423,361Z" transform="translate(0 -361)" fill="#e7e7e7"/>
+      </g>
+    </g>
+  </g>
+</svg>
