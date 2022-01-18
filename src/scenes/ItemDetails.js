@@ -43,10 +43,12 @@ export default ItemDetails = ({navigation, route}) => {
   const [cartItemNumber, setcartItemNumber] = useState(0);
   const [Options_Product, setOptions_Product] = useState([]);
   const [activeOption, setActiveOptions] = useState([]);
+  const [priceOptions, setPriceOptions] = useState(0)
+  const [price, setPrice] = useState([]);
 
   const toggleFavButton = id => dispatch(toggleFav(id));
-  const addToCartButton = (item, number, color, shipping, deliveryItem,option, activeOption) =>
-    dispatch(addToCart(item, number, color, shipping, deliveryItem,option, activeOption));
+  const addToCartButton = (item, number, color, shipping, deliveryItem,option) =>
+    dispatch(addToCart(item, number, color, shipping, deliveryItem,option, activeOption, price));
 
   const checkNumberOfCartItem = async () => {
     let cart = await deviceStorage.getItem('cart');
@@ -70,7 +72,7 @@ export default ItemDetails = ({navigation, route}) => {
             option.push(item.activeId)
         })
         console.log(option , 'option')
-      await addToCartButton(item, number, activeColor, delivery, deliveryItem, option, activeOption);
+      await addToCartButton(item, number, activeColor, delivery, deliveryItem, option);
       checkNumberOfCartItem();
     } catch (er) {
       console.log(er);
@@ -80,6 +82,7 @@ export default ItemDetails = ({navigation, route}) => {
     const elementsIndex = activeOption?.findIndex(element => element.id == option?.id);
     if (elementsIndex > -1) {
       let updateActiveOption = [...activeOption]
+      console.log(updateActiveOption[elementsIndex])
       if(updateActiveOption[elementsIndex].activeId != id){
         updateActiveOption[elementsIndex].activeId = id
         setActiveOptions(updateActiveOption)
@@ -102,13 +105,38 @@ export default ItemDetails = ({navigation, route}) => {
 
   useEffect(() => {
     const {item} = route.params;
+    console.log('test')
+    setPrice(item?.price)
     setItem(item);
     // setActiveColor(item.color[0]?.color)
     setOptions_Product(item.Options_Product);
     setDelivery(item?.ProductDeliveryShopping[0]?.id);
     setDeliveryItem(item?.ProductDeliveryShopping[0]);
+    console.log(item?.price , 'item?.price')
+    
     checkNumberOfCartItem();
   }, []);
+  useEffect(()=>{
+    if(item){
+      if(activeOption.length > 0){
+        let priceOptions = 0
+        activeOption.map((item)=>{
+          priceOptions += item?.price
+        })
+        setPrice(priceOptions * number)
+        setPriceOptions(priceOptions)
+      }
+      else{
+        setPrice(item?.price*number)
+      }
+    }
+    
+  },[activeOption, item])
+
+  useEffect(()=>{
+    price>0 && activeOption.length == 0 && setPrice(item?.price*number)
+    activeOption.length > 0 && setPrice(priceOptions * number)
+  },[number])
   const {width} = useWindowDimensions();
   return (
     <SafeAreaView style={styles.viewCont}>
@@ -173,7 +201,7 @@ export default ItemDetails = ({navigation, route}) => {
               style={{
                 fontSize: 20,
                 color: Colors.Main_Color,
-              }}>{`${item?.price?.toFixed(2)} ${translate(
+              }}>{`${price} ${translate(
               'app.currency',
             )}`}</AppText>
           </View>
@@ -209,27 +237,43 @@ export default ItemDetails = ({navigation, route}) => {
             )}
           />
           {Options_Product?.length > 0 && (
-            <>
-              <FlatList
-                data={Options_Product}
-                style={{alignSelf: 'flex-start', marginTop: 5,
-                paddingBottom:item?.ProductDeliveryShopping?.length > 0 ? 0 : 40}}
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={({item}) => {
-                  const active = activeOption.find(
-                    x => x.id === item?.id,
-                  )?.activeId;
-
-                  return (
-                    <Option
-                      option={item}
-                      active={active}
-                      onPress={onPressOption}
-                    />
-                  );
-                }}
+            <View style={{paddingBottom:item?.ProductDeliveryShopping?.length > 0 ? 0 : 40}}>
+           { Options_Product.map((item, index)=>{
+              const active = activeOption.find(
+                        x => x.id === item?.id,
+              )?.activeId;
+              return(
+                <Option
+                key={index}
+                option={item}
+                active={active}
+                onPress={onPressOption}
               />
-            </>
+              )
+            })}
+            </View>
+          
+            // <>
+            //   <FlatList
+            //     data={Options_Product}
+            //     style={{alignSelf: 'flex-start', marginTop: 5,
+            //     paddingBottom:item?.ProductDeliveryShopping?.length > 0 ? 0 : 40}}
+            //     keyExtractor={(item, index) => index.toString()}
+            //     renderItem={({item}) => {
+            //       const active = activeOption.find(
+            //         x => x.id === item?.id,
+            //       )?.activeId;
+
+            //       return (
+            //         <Option
+            //           option={item}
+            //           active={active}
+            //           onPress={onPressOption}
+            //         />
+            //       );
+            //     }}
+            //   />
+            // </>
           )}
           {/* <ScrollView 
                     horizontal
@@ -385,7 +429,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop:Platform.OS =='ios'? '12%' : '3%',
+    paddingTop:Platform.OS =='ios'? '13%' : '3%',
     paddingHorizontal: screenWidth * 0.02,
   },
   iconCont: {

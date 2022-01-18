@@ -572,13 +572,12 @@ export const readNotification = (notification_id) => async (dispatch) => {
         })
     }
 }
-export const addToCart = (item, quantity, color, delivery, deliveryItem, option, activeOption) => async (dispatch) => {
-    console.warn(activeOption , 'activeOptionnnnnnnn')
+export const addToCart = (item, quantity, color, delivery, deliveryItem, option, activeOption, price) => async (dispatch) => {
     dispatch({
         type: SHOW_MODAL
     })
     try {
-        const response = await API.addToCart(item, quantity, color, delivery, deliveryItem, option, activeOption);
+        const response = await API.addToCart(item, quantity, color, delivery, deliveryItem, option, activeOption,price);
         dispatch(ToastActionsCreators.displayInfo('Added To cart', 2000))
         dispatch({
             type: CLOSE_MODAL,

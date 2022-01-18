@@ -4,7 +4,7 @@ import { Black, Green, grey, orange, White, Main_Color} from '../styles/Colors'
 import AppText from './AppText'
 import CountButton from './CountButtons';
 import { translate } from '../translations/i18n';
-export default Item = ({ style, item, onAdd, onMinus }) => {
+export default Item = ({ style, item, onAdd, total,onMinus }) => {
     return (
         <View style={[styles.rowView, styles.rowCont, style]}>
             <View style={{ flexDirection: 'row', alignItems: 'center', flex: 3 }}>

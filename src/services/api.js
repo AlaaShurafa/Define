@@ -164,8 +164,7 @@ export const readNotification = async (notification_id) => {
             notification_id
     })
 }
-export const addToCart = async (item, quantity, color, delivery, deliveryItem, option, activeOption) => {
-    console.log(item, quantity, color, delivery, deliveryItem, option, activeOption , 'item, quantity, color, delivery, deliveryItem, option, activeOption')
+export const addToCart = async (item, quantity, color, delivery, deliveryItem, option, activeOption,price) => {
     const { id } = item
     const itemCart = {
         ...item,
@@ -173,7 +172,8 @@ export const addToCart = async (item, quantity, color, delivery, deliveryItem, o
         // quantity,
         // logo,
         color,
-        delivery, deliveryItem, option, activeOption
+        delivery, deliveryItem, option, activeOption,
+        price
     }
     // deviceStorage.removeItem('cart')
     let cart = await deviceStorage.getItem('cart')
@@ -182,13 +182,16 @@ export const addToCart = async (item, quantity, color, delivery, deliveryItem, o
         const elementIndex = cart.cart.findIndex(element => element.id == id )
         if(elementIndex != -1){
             cart.cart[elementIndex].quantity = quantity
-            console.log(cart , 'cart after update')
+            cart.cart[elementIndex].price = price
+            cart = JSON.stringify(cart)
+            deviceStorage.saveItem('cart',cart)
         }
         else{
             cart={"cart":[...cart.cart, itemCart]}
+            cart = JSON.stringify(cart)
+            deviceStorage.saveItem('cart',cart)
         }
-        cart = JSON.stringify(cart)
-        deviceStorage.saveItem('cart',cart)
+        
     }
     else{
         cart = JSON.stringify({'cart':[itemCart]})

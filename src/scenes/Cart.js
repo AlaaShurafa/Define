@@ -33,13 +33,11 @@ export default Carts = ({navigation}) => {
     const _setTotal = (cart) =>{
         let totalValue = 0
          cart.map((item)=>{
-            console.log(item.activeOption, 'oooppp')
              item?.activeOption?.forEach(element => {
                 totalValue+= element.price
             });
-            totalValue =( totalValue + item.price )* item.quantity
+            totalValue =( totalValue + item.price )
         })
-        console.log(totalValue , 'totalValue')
         return  totalValue
     }
     const _setTotalShipping = (cart) =>{
@@ -49,36 +47,47 @@ export default Carts = ({navigation}) => {
                 totalShipping = totalShipping + parseFloat(item?.deliveryItem?.price) 
             }
         })
+        if(totalShipping == 0){
+            totalShipping = 100
+        }
         return totalShipping
     }
     const onAdd = (id) => {
         const elementsIndex = cart.findIndex(element => element.id == id )
         let updatedCart = [...cart]
-        updatedCart[elementsIndex] ={...updatedCart[elementsIndex], quantity : updatedCart[elementsIndex].quantity +1 }
-        addToCart(updatedCart[elementsIndex] , 
+        let price = (cart[elementsIndex].price / updatedCart[elementsIndex].quantity) * (updatedCart[elementsIndex].quantity + 1)
+        console.log(updatedCart[elementsIndex].price, ' test  ', updatedCart[elementsIndex].quantity, 'll',price)
+        updatedCart[elementsIndex] ={...updatedCart[elementsIndex], quantity : updatedCart[elementsIndex].quantity +1 , price }
+        addToCart(
+            updatedCart[elementsIndex] , 
             updatedCart[elementsIndex].quantity,
             // updatedCart[elementsIndex].logo,
             // updatedCart[elementsIndex].quantity,
             updatedCart[elementsIndex].color,
             updatedCart[elementsIndex].delivery,
+            updatedCart[elementsIndex].deliveryItem,
             updatedCart[elementsIndex].option,
             updatedCart[elementsIndex].activeOption,
+            price
             )
         setCart(updatedCart)
     }
     const onMinus = (id) => {
         const elementsIndex = cart.findIndex(element => element.id == id )
         let updatedCart = [...cart]
+        let price = (cart[elementsIndex].price / updatedCart[elementsIndex].quantity) * (updatedCart[elementsIndex].quantity -1 )
         if(updatedCart[elementsIndex].quantity > 1){
-            updatedCart[elementsIndex] ={...updatedCart[elementsIndex], quantity : updatedCart[elementsIndex].quantity -1 }
+            updatedCart[elementsIndex] ={...updatedCart[elementsIndex], quantity : updatedCart[elementsIndex].quantity -1, price }
             addToCart(updatedCart[elementsIndex] , 
                 updatedCart[elementsIndex].quantity,
                 // updatedCart[elementsIndex].logo,
                 // updatedCart[elementsIndex].quantity,
                 updatedCart[elementsIndex].color,
                 updatedCart[elementsIndex].delivery,
+                updatedCart[elementsIndex].deliveryItem,
                 updatedCart[elementsIndex].option,
                 updatedCart[elementsIndex].activeOption,
+                price
                 )            
             setCart(updatedCart)
         }
@@ -90,10 +99,12 @@ export default Carts = ({navigation}) => {
 
     useEffect(()=>{
         const totalValue =  _setTotal(cart)
-        console.log(totalValue , 'totalValue')
         const totalShipping = _setTotalShipping(cart)
         setTotal(totalValue)
         setTotalShipping(totalShipping)
+        // setCart(cart)
+        // _setCart()
+        // console.log(cart, 'cryyt')
     },[isFocused,cart])
 
     const confirmOrder = async () =>{
@@ -137,7 +148,7 @@ export default Carts = ({navigation}) => {
                         style={{ flex: 1 }}
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({ item }) =>
-                            <CartItem item={item} onAdd={onAdd} onMinus={onMinus} />
+                            <CartItem item={item} total={total} onAdd={onAdd} onMinus={onMinus} />
                         }
                         renderHiddenItem={ ({item}, rowMap) => (
                             <View style={{justifyContent:'center',flex:1,marginBottom:20,alignItems:I18nManager.isRTL ? 'flex-end': 'flex-start'}}>
@@ -165,7 +176,7 @@ export default Carts = ({navigation}) => {
                         </View>
                         <View style={styles.total}>
                             <AppText bold style={{color:Colors.Black,fontSize:16}}>{translate('app.product_tax')}</AppText>
-                            <AppText bold style={{color:Colors.Black,fontSize:16}}>0{translate('app.currency')}</AppText>
+                            <AppText bold style={{color:Colors.Black,fontSize:16}}>{total * .25}{translate('app.currency')}</AppText>
                         </View>
                         <View style={styles.total}>
                             <AppText bold style={{color:Colors.Black,fontSize:16}}>{translate('app.deliveryShopping')}</AppText>
@@ -173,7 +184,7 @@ export default Carts = ({navigation}) => {
                         </View>
                         <View style={[styles.total,{marginBottom:10}]}>
                             <AppText bold style={{color:Colors.Main_Color,fontSize:20}}>{translate('app.total')}</AppText>
-                            <AppText bold style={{color:Colors.Main_Color,fontSize:20}}>{(total+totalShipping).toFixed(2)}{translate('app.currency')}</AppText>
+                            <AppText bold style={{color:Colors.Main_Color,fontSize:20}}>{(total+totalShipping + (total * .25)).toFixed(2)}{translate('app.currency')}</AppText>
                         </View>
                     </View>
                     <Button
