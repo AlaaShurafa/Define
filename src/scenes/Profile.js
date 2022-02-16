@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {StyleSheet, View, SafeAreaView, TouchableOpacity, Image, StatusBar, KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
 import { connect } from 'react-redux';
-import {AppText, Button, Error, Input, Link, BackButton} from '../component'
+import {AppText, Button, Error, Input, Link, BackButton, Header, Header2} from '../component'
 import * as Colors from '../styles/Colors'
 import { translate } from '../translations/i18n';
 import * as yup from 'yup';
@@ -78,15 +78,14 @@ class Profile extends React.Component{
 
     render(){
         const {email, emailError,errors, nameError, name, mobileError, mobile} = this.state;
-        console.log(this.props.user?.avatar , 'this.state.source')
-        // console.log(this.props.user , 'this.props.user?this.props.user?this.props.user?')
         return (
             <View style={styles.viewCont}>
                <StatusBar backgroundColor={Colors.White} animated={true} barStyle={"dark-content"}/>
-                <BackButton style={{alignSelf:'flex-end', marginRight:20, marginTop:10, tintColor:Colors.Main_Color}}/>
+                {/* <BackButton style={{alignSelf:'flex-end', marginRight:20, marginTop:10, tintColor:Colors.Main_Color}}/> */}
+                <Header2 title={translate('app.profile')}/>
                 <ScrollView 
-                    contentContainerStyle={{flexGrow: 1}}
-                    style={{width:'100%',paddingHorizontal:'4.5%',flex:1}}>
+                    contentContainerStyle={{flexGrow: 1,paddingHorizontal:'4.5%',}}
+                    style={{width:'100%',flex:1}}>
                     <View style={{flex:1,justifyContent:'space-between'}}>
                         <View>
                             <View style={styles.info}>

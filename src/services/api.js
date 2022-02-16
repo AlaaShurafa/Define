@@ -143,9 +143,10 @@ export const getFoods = async (category_id = null, most_ordered = null, per_page
     })
 }
 export const getOrders = async (complete) => {
+    console.warn('get orrders', complete)
     return await axios.get('api/orders',{
         params:{
-            per_page:100,
+            // per_page:100,
             is_completed:complete,
             // lat,
             // lng
@@ -199,7 +200,7 @@ export const addToCart = async (item, quantity, color, delivery, deliveryItem, o
     }
 }
 export const storeOrder = async (products,order_date, order_time, address, lat, lng) => {
-    console.log(products , 'products')
+    console.log(products, 'products')
     return await axios.post('api/orders/store',{
         products,
         order_date,
@@ -244,4 +245,9 @@ export const responseTicket = async (ticket_id,response) => {
 export const hasPayment = async () => {
     console.error('api/payments/has_payment')
     return await axios.get('api/payments/has_payment')
+}
+export const addPayment = async (stripeToken) => {
+    return await axios.post('api/payments/add_payment',{
+        stripeToken
+    })
 }

@@ -15,7 +15,7 @@ export default Item = ({style, item})=>{
             <View style={{justifyContent:'space-between',alignItems:'flex-start',flexShrink: 1}}>
                 <AppText style={styles.title} semibold>{item?.User?.name}</AppText>
                 {/* <AppText style={styles.grey} semibold>حجم متوسط</AppText> */}
-                <AppText style={styles.green} semibold>{`${item?.balance} ${translate('app.currency')}`}</AppText>
+                <AppText style={styles.green} semibold>{`${item?.amount} ${translate('app.currency')}`}</AppText>
             </View>
         </View>
         <View style={{alignItems:'center',flex:1}}>

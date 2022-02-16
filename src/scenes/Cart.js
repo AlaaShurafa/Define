@@ -17,6 +17,7 @@ export default Carts = ({navigation}) => {
     const dispatch = useDispatch();
     const [cart, setCart] = useState([])
     const [total, setTotal] = useState(0)
+    const [totalProduct, setTotalProduct] = useState(0)
     const [totalShipping, setTotalShipping] = useState(0)
     const storeCartOrder = (cart) => dispatch(storeOrder(cart))
     const loginGuestBtn = (start) => dispatch(loginGuest(start))
@@ -32,11 +33,14 @@ export default Carts = ({navigation}) => {
     }
     const _setTotal = (cart) =>{
         let totalValue = 0
+        let deliveryPrice = 0
+        
          cart.map((item)=>{
-             item?.activeOption?.forEach(element => {
-                totalValue+= element.price
-            });
-            totalValue =( totalValue + item.price )
+            deliveryPrice = 0
+            if(item?.deliveryItem){
+                deliveryPrice = parseFloat(item?.deliveryItem?.price) 
+            }
+            totalValue += item.price - deliveryPrice
         })
         return  totalValue
     }
@@ -55,9 +59,12 @@ export default Carts = ({navigation}) => {
     const onAdd = (id) => {
         const elementsIndex = cart.findIndex(element => element.id == id )
         let updatedCart = [...cart]
-        let price = (cart[elementsIndex].price / updatedCart[elementsIndex].quantity) * (updatedCart[elementsIndex].quantity + 1)
-        console.log(updatedCart[elementsIndex].price, ' test  ', updatedCart[elementsIndex].quantity, 'll',price)
-        updatedCart[elementsIndex] ={...updatedCart[elementsIndex], quantity : updatedCart[elementsIndex].quantity +1 , price }
+        let deliveryPrice = 0
+        if(updatedCart[elementsIndex].deliveryItem){
+            deliveryPrice = parseFloat(updatedCart[elementsIndex].deliveryItem?.price)
+        }
+        let price = ((cart[elementsIndex].price-deliveryPrice) / updatedCart[elementsIndex].quantity) * (updatedCart[elementsIndex].quantity +1 )
+        updatedCart[elementsIndex] ={...updatedCart[elementsIndex], quantity : updatedCart[elementsIndex].quantity +1, price: price + deliveryPrice }
         addToCart(
             updatedCart[elementsIndex] , 
             updatedCart[elementsIndex].quantity,
@@ -68,16 +75,20 @@ export default Carts = ({navigation}) => {
             updatedCart[elementsIndex].deliveryItem,
             updatedCart[elementsIndex].option,
             updatedCart[elementsIndex].activeOption,
-            price
+            updatedCart[elementsIndex].price
             )
         setCart(updatedCart)
     }
     const onMinus = (id) => {
         const elementsIndex = cart.findIndex(element => element.id == id )
         let updatedCart = [...cart]
-        let price = (cart[elementsIndex].price / updatedCart[elementsIndex].quantity) * (updatedCart[elementsIndex].quantity -1 )
+        let deliveryPrice = 0
+        if(updatedCart[elementsIndex].deliveryItem){
+            deliveryPrice = parseFloat(updatedCart[elementsIndex].deliveryItem?.price)
+        }
+        let price = ((cart[elementsIndex].price-deliveryPrice) / updatedCart[elementsIndex].quantity) * (updatedCart[elementsIndex].quantity -1 )
         if(updatedCart[elementsIndex].quantity > 1){
-            updatedCart[elementsIndex] ={...updatedCart[elementsIndex], quantity : updatedCart[elementsIndex].quantity -1, price }
+            updatedCart[elementsIndex] ={...updatedCart[elementsIndex], quantity : updatedCart[elementsIndex].quantity -1, price: price + deliveryPrice }
             addToCart(updatedCart[elementsIndex] , 
                 updatedCart[elementsIndex].quantity,
                 // updatedCart[elementsIndex].logo,
@@ -87,24 +98,20 @@ export default Carts = ({navigation}) => {
                 updatedCart[elementsIndex].deliveryItem,
                 updatedCart[elementsIndex].option,
                 updatedCart[elementsIndex].activeOption,
-                price
+                updatedCart[elementsIndex].price, 
                 )            
             setCart(updatedCart)
         }
     }
     useEffect(() => {
-        // deviceStorage.removeItem('cart')
         _setCart()
     }, [isFocused])
 
     useEffect(()=>{
         const totalValue =  _setTotal(cart)
         const totalShipping = _setTotalShipping(cart)
-        setTotal(totalValue)
+        setTotal(totalValue )
         setTotalShipping(totalShipping)
-        // setCart(cart)
-        // _setCart()
-        // console.log(cart, 'cryyt')
     },[isFocused,cart])
 
     const confirmOrder = async () =>{
@@ -130,6 +137,13 @@ export default Carts = ({navigation}) => {
         deviceStorage.saveItem('cart',cartString)
         setCart(updatedCart)
     }
+    useEffect(()=>{
+        let totalFinal = total + (total * .25)
+        console.log(totalFinal , 'totalFinal')
+        if(totalFinal >= 1000){
+            setTotalShipping(0)
+        }
+    },[total])
     return (
         <View style={styles.viewCont} >
            <StatusBar backgroundColor={Colors.White} animated={true} barStyle={"dark-content"} />
@@ -184,7 +198,7 @@ export default Carts = ({navigation}) => {
                         </View>
                         <View style={[styles.total,{marginBottom:10}]}>
                             <AppText bold style={{color:Colors.Main_Color,fontSize:20}}>{translate('app.total')}</AppText>
-                            <AppText bold style={{color:Colors.Main_Color,fontSize:20}}>{(total+totalShipping + (total * .25)).toFixed(2)}{translate('app.currency')}</AppText>
+                            <AppText bold style={{color:Colors.Main_Color,fontSize:20}}>{(total+totalShipping + (total * .25))}{translate('app.currency')}</AppText>
                         </View>
                     </View>
                     <Button

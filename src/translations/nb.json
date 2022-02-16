@@ -141,6 +141,11 @@
             "ticketDetails": " Billettdetaljer",
             "count": " Antall ting",
             "select_location": " Velg et nettsted for å bekrefte bestillingen",
-            "shipmentNumber": " Leveringsnummer"
+            "shipmentNumber": " Leveringsnummer",
+            "cancel":"Avbryt",
+            "no_tax":"Ekskl moms",
+            "shape":"form",
+        "odor":"lukt",
+        "size":"størrelse"
     }
   }

@@ -141,6 +141,11 @@
         "ticketDetails": " Bilet detayları",
         "count": " Öğe sayısı",
         "select_location": " Siparişi onaylamak için bir site seçin",
-        "shipmentNumber": " Teslimat numarası"
+        "shipmentNumber": " Teslimat numarası",
+        "cancel":"İptal et",
+        "no_tax":"KDV hariç",
+        "shape":"şekil",
+        "odor":"koku",
+        "size":"boyut"
     }
   }

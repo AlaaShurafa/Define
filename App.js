@@ -8,7 +8,8 @@ import Font from './src/styles/Fonts';
 import {LogBox} from 'react-native';
 import {Red_Error, Green} from './src/styles/Colors';
 import {setI18nConfig} from './src/translations/i18n';
-import { Loader} from './src/component';
+import {CardForm, Loader} from './src/component';
+import {StripeProvider} from '@stripe/stripe-react-native';
 
 let store = configureStore();
 const App = () => {
@@ -29,11 +30,11 @@ const App = () => {
 
   }, []);
   return (
-    // <StripeProvider
-    //   publishableKey="pk_live_51JhCQtBCB6oJqS7JhcNi3JbDovmeqRmxIwMYS2kCG9Ncsw3rEV9DEwuE4KMzhpapQ9xmN2oHEU72S81ybT2ju9FY00yQ8C1OZc"
-    //   urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
-    //   merchantIdentifier="merchant.com.{{YOUR_APP_NAME}}" // required for Apple Pay
-    // >
+    <StripeProvider
+      publishableKey="pk_test_51JhCQtBCB6oJqS7JLfh0SC9g6v1Jnd0WIXCSx56vlWO78yQ9V4ieGBwbk4p6I2tu7Ncd4PxS7WpWXnyykVtbi6dR00JiJjeVxD"
+      urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
+      merchantIdentifier="merchant.com.{{YOUR_APP_NAME}}" // required for Apple Pay
+    >
       <Provider store={store}>
         <Toast
           position="top"
@@ -54,9 +55,9 @@ const App = () => {
         />
         <Loader />
         <AppNavigator />
-        {/* <CardForm /> */}
+        <CardForm />
       </Provider>
-    // </StripeProvider>
+    </StripeProvider>
   );
 };
 

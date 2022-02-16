@@ -7,10 +7,11 @@ import {
   ImageBackground,
   StatusBar,
   Dimensions,
-  Image,
+  // Image,
   ScrollView,
   FlatList,
   Platform,
+  Alert,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -30,7 +31,7 @@ import {translate} from '../translations/i18n';
 import deviceStorage from '../services/deviceStorage';
 import RenderHtml from 'react-native-render-html';
 import {useWindowDimensions} from 'react-native';
-
+import {Image} from '../component'
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 export default ItemDetails = ({navigation, route}) => {
@@ -45,10 +46,11 @@ export default ItemDetails = ({navigation, route}) => {
   const [activeOption, setActiveOptions] = useState([]);
   const [priceOptions, setPriceOptions] = useState(0)
   const [price, setPrice] = useState([]);
+  const [tax, setTax] = useState(0);
 
   const toggleFavButton = id => dispatch(toggleFav(id));
   const addToCartButton = (item, number, color, shipping, deliveryItem,option) =>
-    dispatch(addToCart(item, number, color, shipping, deliveryItem,option, activeOption, price));
+    dispatch(addToCart(item, number, color, shipping, deliveryItem,option, activeOption, price + tax * number));
 
   const checkNumberOfCartItem = async () => {
     let cart = await deviceStorage.getItem('cart');
@@ -74,6 +76,7 @@ export default ItemDetails = ({navigation, route}) => {
         console.log(option , 'option')
       await addToCartButton(item, number, activeColor, delivery, deliveryItem, option);
       checkNumberOfCartItem();
+      // Alert.alert("add to cart")
     } catch (er) {
       console.log(er);
     }
@@ -85,6 +88,8 @@ export default ItemDetails = ({navigation, route}) => {
       console.log(updateActiveOption[elementsIndex])
       if(updateActiveOption[elementsIndex].activeId != id){
         updateActiveOption[elementsIndex].activeId = id
+        updateActiveOption[elementsIndex].price = price
+        updateActiveOption[elementsIndex].name = option.name
         setActiveOptions(updateActiveOption)
 
       }
@@ -98,22 +103,16 @@ export default ItemDetails = ({navigation, route}) => {
     }
     else{
         console.log(elementsIndex)
-        setActiveOptions([...activeOption, {id:option?.id, activeId:id, price}])
+        setActiveOptions([...activeOption, {id:option?.id, activeId:id, price, name:option.name}])
     }
-    // console.log(activeOption, activeOption)
   };
 
   useEffect(() => {
     const {item} = route.params;
-    console.log('test')
     setPrice(item?.price)
     setItem(item);
-    // setActiveColor(item.color[0]?.color)
-    setOptions_Product(item.Options_Product);
-    setDelivery(item?.ProductDeliveryShopping[0]?.id);
-    setDeliveryItem(item?.ProductDeliveryShopping[0]);
-    console.log(item?.price , 'item?.price')
-    
+    setOptions_Product(item.Options_Product)
+    item?.tax && setTax(item?.tax_price)    
     checkNumberOfCartItem();
   }, []);
   useEffect(()=>{
@@ -121,22 +120,54 @@ export default ItemDetails = ({navigation, route}) => {
       if(activeOption.length > 0){
         let priceOptions = 0
         activeOption.map((item)=>{
-          priceOptions += item?.price
+          if(item.name != 'county'){
+            priceOptions += item?.price
+          }
         })
-        setPrice(priceOptions * number)
         setPriceOptions(priceOptions)
       }
       else{
-        setPrice(item?.price*number)
+        setPriceOptions(0)
       }
     }
     
   },[activeOption, item])
 
+  const setDeliveryBtn = (item) => {
+    if(delivery != item?.id ){
+      setDelivery(item?.id)
+      setDeliveryItem(item)
+    }
+    else{
+      setDelivery(null)
+      setDeliveryItem(null)
+    }
+     
+  }
+  const calculatePrice = () =>{
+    console.log(activeOption , 'activeoption')
+    const elementsIndex = activeOption?.findIndex(element => element.name == 'county');
+    console.warn(elementsIndex , 'elementsIndex')
+    let price = item?.price
+    let deliveryPrice = 0
+    if(priceOptions){
+      price += priceOptions
+    }
+    // else{
+    //   price += item?.price
+    // }
+    if(elementsIndex > -1){
+      price = price * activeOption[elementsIndex].price
+    }
+    if(deliveryItem){
+      deliveryPrice = parseFloat(deliveryItem?.price)
+    }
+    setPrice(price * number + deliveryPrice)
+  }
+
   useEffect(()=>{
-    price>0 && activeOption.length == 0 && setPrice(item?.price*number)
-    activeOption.length > 0 && setPrice(priceOptions * number)
-  },[number])
+    calculatePrice()
+  },[number, delivery, priceOptions, item, activeOption])
   const {width} = useWindowDimensions();
   return (
     <SafeAreaView style={styles.viewCont}>
@@ -191,11 +222,17 @@ export default ItemDetails = ({navigation, route}) => {
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-              alignItems: 'center',
+              alignItems: 'flex-start',
             }}>
-            <AppText semibold style={[styles.title, {flexShrink: 1}]}>
+              <View>
+              <AppText semibold style={[styles.title, {flexShrink: 1}]}>
               {item?.name}
             </AppText>
+            <AppText semibold style={[styles.title,{fontSize:13}]}>
+              {translate('app.no_tax')}
+            </AppText>
+              </View>
+            
             <AppText
               semibold
               style={{
@@ -237,7 +274,9 @@ export default ItemDetails = ({navigation, route}) => {
             )}
           />
           {Options_Product?.length > 0 && (
-            <View style={{paddingBottom:item?.ProductDeliveryShopping?.length > 0 ? 0 : 40}}>
+            <View 
+            // style={{paddingBottom:item?.ProductDeliveryShopping?.length > 0 ? 0 : 40}}
+            >
            { Options_Product.map((item, index)=>{
               const active = activeOption.find(
                         x => x.id === item?.id,
@@ -310,7 +349,7 @@ export default ItemDetails = ({navigation, route}) => {
                 style={{
                   alignSelf: 'flex-start',
                   marginTop: 10,
-                  paddingBottom: 40,
+                  
                 }}
                 keyExtractor={(item, index) => index.toString()}
                 horizontal
@@ -318,14 +357,19 @@ export default ItemDetails = ({navigation, route}) => {
                   <Btn
                     shipping
                     item={item}
-                    onPress={() => setDelivery(item?.id)}
+                    onPress={()=>setDeliveryBtn(item)}
                     active={delivery == item?.id}
                   />
                 )}
               />
             </>
           )}
+          {item?.tax && <View style={styles.total}>
+            <AppText semibold style={{color:Colors.Black,fontSize:18}}>{item?.tax?.name}</AppText>
+            <AppText semibold style={{color:Colors.Main_Color,fontSize:16}}>{tax * number}{translate('app.currency')}</AppText>
+          </View>}
         </View>
+        
       </ScrollView>
       <View
         style={{
@@ -363,7 +407,10 @@ const Btn = ({onPress, active, shipping, item}) => {
           {item?.name}
         </AppText>
         {!!item?.image && (
-          <Image source={item?.image} style={{height: 44, width: 56}} />
+          // <Image source={item?.image} style={{height: 44, width: 56}} />
+          <View style={{height: 45, width: 45, alignSelf:'center'}}>
+          <Image url={item?.image} style={{resizeMode:'contain'}} />
+        </View>
         )}
         {/* { item?.price && (
           <AppText semibold style={{textAlign: 'center', fontSize: 14}}>
@@ -379,10 +426,17 @@ const Option = ({option, active, onPress }) => {
 //     console.log(option?.id , 'activeOption')
   
 //   console.log(option?.option, 'item?.option');
+let name = '';
+if(option.name === 'logo') name = translate('app.logo')
+else if(option.name === 'size') name = translate('app.size')
+else if(option.name === 'shape') name = translate('app.shape')
+else if(option.name === 'odor') name = translate('app.odor')
+else if(option.name === 'county') name = translate('app.quantity')
+else  name = option.name
   return (
     <View>
       <AppText semibold style={{fontSize: 22, marginTop: 15}}>
-        {option.name}
+        {name}
       </AppText>
       <FlatList
         data={option?.option}
@@ -520,4 +574,10 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
   },
+  total:{
+    flexDirection:'row',
+    paddingBottom: 40,
+    justifyContent:'space-between',
+    marginTop:20
+},
 });

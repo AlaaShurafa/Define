@@ -35,7 +35,12 @@ import {
   GET_MORE_FOODS_SUCCESS,
   GET_MORE_FOODS_FAILURE,
   HAS_PAYMENT_SUCCESS,
-  HAS_PAYMENT_FAILURE
+  HAS_PAYMENT_FAILURE,
+  ADD_PAYMENT_FAILURE,
+  ADD_PAYMENT_SUCCESS,
+  ADD_PAYMENT_REQUEST,
+  STORE_ORDER_SUCCESS,
+  STORE_ORDER_REQUEST
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -60,7 +65,9 @@ const INITIAL_STATE = {
   loadingTickets: false,
   loadingMore: false,
   pagingProducts: undefined,
-  showCard:false
+  showCard:false,
+  loadingAddPayment : false,
+  order_id:undefined
 };
 
 const modal = (state = INITIAL_STATE, {type, payload}) => {
@@ -87,23 +94,26 @@ const modal = (state = INITIAL_STATE, {type, payload}) => {
         element => element.id == payload.ref_id,
       );
       let updatedFoods = [...state.foods];
-      updatedFoods[elementsIndex] = {
-        ...updatedFoods[elementsIndex],
-        is_fav: !updatedFoods[elementsIndex].is_fav,
-      };
+      if(elementsIndex > -1){
+        updatedFoods[elementsIndex] = {
+          ...updatedFoods[elementsIndex],
+          is_fav: !updatedFoods[elementsIndex].is_fav,
+        };
+      }
+      
 
-      const elementsIndex2 = state.mostOrderFoods.findIndex(
-        element => element.id == payload.ref_id,
-      );
-      let updatedMostOrderFoods = [...state.mostOrderFoods];
-      updatedMostOrderFoods[elementsIndex2] = {
-        ...updatedMostOrderFoods[elementsIndex2],
-        is_fav: !updatedMostOrderFoods[elementsIndex2].is_fav,
-      };
+      // const elementsIndex2 = state.mostOrderFoods.findIndex(
+      //   element => element.id == payload.ref_id,
+      // );
+      // let updatedMostOrderFoods = [...state.mostOrderFoods];
+      // updatedMostOrderFoods[elementsIndex2] = {
+      //   ...updatedMostOrderFoods[elementsIndex2],
+      //   is_fav: !updatedMostOrderFoods[elementsIndex2].is_fav,
+      // };
       return {
         ...state,
         foods: updatedFoods,
-        mostOrderFoods: updatedMostOrderFoods,
+        // mostOrderFoods: updatedMostOrderFoods,
       };
 
     case READ_NOTIFICATION_SUCCESS:
@@ -190,8 +200,17 @@ const modal = (state = INITIAL_STATE, {type, payload}) => {
 
     case HAS_PAYMENT_SUCCESS:
       return {...state, showCard: payload.showCard};
-
-    default:
+    case ADD_PAYMENT_REQUEST:
+      return {...state, loadingAddPayment:true};
+    case ADD_PAYMENT_SUCCESS:
+      return {...state, showCard: payload.showCard, loadingAddPayment:false};
+    case ADD_PAYMENT_FAILURE:
+      return {...state, showCard: payload.showCard, loadingAddPayment:false};
+    case STORE_ORDER_REQUEST:
+        return {...state, order_id:undefined}
+    case STORE_ORDER_SUCCESS:
+      return {...state, order_id:payload.order_id}
+      default:
       return state;
   }
 };

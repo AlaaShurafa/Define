@@ -27,6 +27,7 @@ import {
 import {updateOrder, startOrderDelivery} from '../store/actions/app';
 import * as Colors from '../styles/Colors';
 import {translate} from '../translations/i18n';
+import {url} from '../services/config';
 
 export default OrderDetails = ({route, navigation}) => {
   const dispatch = useDispatch();
@@ -40,8 +41,10 @@ export default OrderDetails = ({route, navigation}) => {
   }));
   const _updateOrder = (order_id, status) =>
     dispatch(updateOrder(order_id, status));
+
   const _startOrderDelivery = (order_id, lat, lng) =>
     dispatch(startOrderDelivery(order_id, lat, lng));
+
   const _setTotal = order => {
     let totalValue = 0;
     order.OrderProducts.map(item => {
@@ -55,7 +58,7 @@ export default OrderDetails = ({route, navigation}) => {
     setItemStatus(item?.status);
     const totalValue = _setTotal(item);
     trackOrderFunc();
-    console.log(item, 'itttteee');
+    console.warn(item?.id, 'itttteee');
     setTotal(totalValue);
   }, [item]);
   const updateOrderButton = async status => {
@@ -108,14 +111,17 @@ export default OrderDetails = ({route, navigation}) => {
             <AppText semibold style={styles.name}>
               {item?.Provider?.name}
             </AppText>
-            <FlatList
+            {item?.OrderProducts.map((item, index) => {
+              return <FavoriteItem key={index} item={item} orderDetails />;
+            })}
+            {/* <FlatList
               data={item?.OrderProducts}
               style={{flex: 1}}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({item}) => {
                 return <FavoriteItem item={item} orderDetails />;
               }}
-            />
+            /> */}
           </View>
           {type === 2 && (
             <View style={styles.boxView}>
@@ -181,7 +187,36 @@ export default OrderDetails = ({route, navigation}) => {
               </View>
             </View>
           )}
-          <FlatList
+          {item?.OrderStatuses.map((item, index) => {
+            return (
+              <View>
+                <View
+                  style={[
+                    styles.rowView,
+                    {marginVertical: 0, justifyContent: 'flex-start'},
+                  ]}>
+                  <Icon
+                    name="check-circle"
+                    size={20}
+                    color={Colors.Main_Color}
+                  />
+                  <AppText
+                    semibold
+                    style={{
+                      fontSize: 19,
+                      color: Colors.Main_Color,
+                      paddingHorizontal: 3,
+                    }}>
+                    {item?.status_str}
+                  </AppText>
+                </View>
+                <AppText semibold style={{marginLeft: 22}}>
+                  {item?.created_at?.split('T')[0]}
+                </AppText>
+              </View>
+            );
+          })}
+          {/* <FlatList
             data={item?.OrderStatuses}
             keyExtractor={(item, index)=>index.toString()}
             renderItem={({item}) => {
@@ -213,7 +248,7 @@ export default OrderDetails = ({route, navigation}) => {
                 </View>
               );
             }}
-          />
+          /> */}
           <View style={{}}>
             <Dash
               style={{width: '100%', height: 1}}
@@ -222,22 +257,22 @@ export default OrderDetails = ({route, navigation}) => {
               dashLength={5}
               dashThickness={1}
             />
-            <View style={styles.total}>
+            {/* <View style={styles.total}>
               <AppText bold style={{color: Colors.Black, fontSize: 16}}>
                 {translate('app.product_cost')}
               </AppText>
               <AppText bold style={{color: Colors.Black, fontSize: 16}}>{`${
                 item?.balance
               }${translate('app.currency')}`}</AppText>
-            </View>
-            <View style={styles.total}>
+            </View> */}
+            {/* <View style={styles.total}>
               <AppText bold style={{color: Colors.Black, fontSize: 16}}>
                 {translate('app.product_tax')}
               </AppText>
               <AppText bold style={{color: Colors.Black, fontSize: 16}}>
                 0
               </AppText>
-            </View>
+            </View> */}
             <View style={styles.total}>
               <AppText bold style={{color: Colors.Main_Color, fontSize: 20}}>
                 {translate('app.total')}
@@ -245,7 +280,7 @@ export default OrderDetails = ({route, navigation}) => {
               <AppText
                 bold
                 style={{color: Colors.Main_Color, fontSize: 20}}>{`${
-                item?.balance
+                item?.amount
               }${translate('app.currency')}`}</AppText>
             </View>
           </View>
@@ -261,12 +296,21 @@ export default OrderDetails = ({route, navigation}) => {
                     {translate('app.cancel_order')}
                   </AppText>
                 </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => Linking.openURL(url + 'stripe/' + item?.id)}
+                  style={[styles.btn, styles.payButton, {marginLeft: 10}]}>
+                  <AppText
+                    semibold
+                    style={[styles.btnText, {color: Colors.White}]}>
+                    {translate('app.pay')}
+                  </AppText>
+                </TouchableOpacity>
               </View>
             ) : (
               <OrderStatus
                 backgroundColor={Colors.grey_Background_Light}
                 color={Colors.Main_Color}
-                text={item?.status_str}
+                text={itemStatus == 4 ? translate('app.order_4'): item?.status_str}
                 style={{marginBottom: 15}}
                 shipmentNumber={item?.shipment_number}
               />
@@ -358,5 +402,8 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 15,
     color: Colors.Black,
+  },
+  payButton: {
+    backgroundColor: Colors.Main_Color,
   },
 });

@@ -116,9 +116,9 @@
         "arabic":"عربية",
         "english":"انجليزية",
         "sw":"سويدية",
-        "da":"Danish",
-        "nb":"Norwegian",
-        "tr":"Turkic",
+        "da":"دنماركية",
+        "nb":"نرويجية",
+        "tr":"تركية",
         "color":"الألوان",
         "quantity":"الكمية",
         "carton":"كرتونة",
@@ -141,6 +141,11 @@
         "ticketDetails":"تفاصيل التذكرة",
         "count":"العدد",
         "select_location":"اختر موقع لتأكيد الطلب",
-        "shipmentNumber":"رقم الشحنة"
+        "shipmentNumber":"رقم الشحنة",
+        "cancel":"الغاء",
+        "no_tax":"غير شامل الضريبة",
+        "shape":"الشكل",
+        "odor":"الرائحة",
+        "size":"الحجم"
     }
 }

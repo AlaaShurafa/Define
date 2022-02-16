@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, Image, StyleSheet} from 'react-native';
+import {View, Image, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import {Black, Green, grey, Main_Color_op, White} from '../styles/Colors';
 import AppText from './AppText';
 import {Main_Color, grey_Background_Light, grey_Text} from '../styles/Colors';
 import {translate} from '../translations/i18n';
 import RenderHtml from 'react-native-render-html';
-import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
+// import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 
 export default Item = ({style, item, orderDetails, fav, navigation}) => {
   console.log(item, 'item');
@@ -56,7 +56,7 @@ export default Item = ({style, item, orderDetails, fav, navigation}) => {
                         }}
                     /> */}
 
-              {/* {  orderDetails && <AppText style={styles.grey} semibold>{translate('app.count')}= {item?.count}</AppText>} */}
+              {  orderDetails && <AppText style={styles.grey} semibold>{translate('app.count')}= {item?.Quantity}</AppText>}
             </View>
           </View>
           <View style={{alignItems: 'flex-end', flex: 1, marginLeft: 10}}>
@@ -68,15 +68,24 @@ export default Item = ({style, item, orderDetails, fav, navigation}) => {
 
         {orderDetails && (
             <>
-            <View style={[styles.rowView, {paddingTop: 5}]}>
+           {item?.color && <View style={[styles.rowView, {paddingTop: 5}]}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <AppText regular style={styles.option_name}>{translate('app.color')} </AppText>
                     {/* <AppText regular>{item.color}</AppText> */}
                     <View style={[styles.color, {backgroundColor: item?.color}]} />
 
                 </View>
+              </View>}
+              {item?.OrderProductOption.map((item, index)=>{
+              return <View style={[styles.rowView, {paddingTop: 5}]}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <AppText regular style={styles.option_name}>{item.option_name} : </AppText>
+                  <AppText regular>{item.product_option}</AppText>
               </View>
-          <FlatList
+              {/* <AppText style={styles.orange} semibold>{`${item?.price}${translate('app.currency')}`}</AppText> */}
+            </View>
+            })}
+          {/* <FlatList
             data={item?.OrderProductOption}
             renderItem={({item}) => (
               <View style={[styles.rowView, {paddingTop: 5}]}>
@@ -87,7 +96,7 @@ export default Item = ({style, item, orderDetails, fav, navigation}) => {
                 <AppText style={styles.orange} semibold>{`${item?.price}${translate('app.currency')}`}</AppText>
               </View>
             )}
-          />
+          /> */}
           </>
         )}
       </View>

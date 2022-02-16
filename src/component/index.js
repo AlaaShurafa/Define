@@ -21,7 +21,7 @@ import CurrentPositionButton from './CurrentPositionButton';
 import RadioButton from './RadioButton';
 import RadioButtonsList from './RadioButtonsList';
 import MapLocation from './MapLocation';
-// import CardForm from './CardForm';
+import CardForm from './CardForm';
 import Image from './Image';
 import ImageZoomer from './ImageZoomer';
 import {HeaderText,Paragraph, Link,Title,Error, OrderStatus} from './OrderText';
@@ -51,6 +51,6 @@ export {AppText, Button,
         Header2,
         AddButton,
         MapLocation,
-        // CardForm,
+        CardForm,
         Image
         }

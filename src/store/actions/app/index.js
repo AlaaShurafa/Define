@@ -1,4 +1,4 @@
-import { PermissionsAndroid } from 'react-native'
+import { Linking, PermissionsAndroid } from 'react-native'
 import {
     CONTACT_US_FAILURE,
     CONTACT_US_REQUEST,
@@ -70,12 +70,18 @@ import {
     RESET_PASSWORD_FAILURE,
     RESPONSE_TICKETS_SUCCESS,
     RESPONSE_TICKETS_FAILURE,
+
     HAS_PAYMENT_REQUEST,
     HAS_PAYMENT_SUCCESS,
-    HAS_PAYMENT_FAILURE
+    HAS_PAYMENT_FAILURE,
+
+    ADD_PAYMENT_REQUEST,
+    ADD_PAYMENT_SUCCESS,
+    ADD_PAYMENT_FAILURE
 } from '../types'
 
 import * as API from '../../../services/api.js';
+import {url} from '../../../services/config'
 import deviceStorage from '../../../services/deviceStorage';
 import { ToastActionsCreators } from 'react-native-redux-toast';
 import { navigate } from '../../../navigations/RootNavigation'
@@ -381,6 +387,7 @@ export const getMostOrdered = (category_id, most_ordered, per_page) => async (di
     }
 }
 export const getOrders = (complete) => async (dispatch) => {
+    console.log(complete , 'completecompletecomplete')
     dispatch({
         type: GET_ORDERS_REQUEST
     })
@@ -448,7 +455,7 @@ export const getOrders = (complete) => async (dispatch) => {
         //       } 
         // }
     } catch (err) {
-        console.log(err, 'err')
+        console.warn('get orrders', err)
         dispatch(ToastActionsCreators.displayError('Network Error', 2000))
         dispatch({
             type: GET_ORDERS_FAILURE,
@@ -582,7 +589,7 @@ export const addToCart = (item, quantity, color, delivery, deliveryItem, option,
         dispatch({
             type: CLOSE_MODAL,
         })
-        navigate('Cart')
+        // navigate('Cart')
         
     } catch (err) {
         console.log(err, 'err')
@@ -599,7 +606,6 @@ export const addToCart = (item, quantity, color, delivery, deliveryItem, option,
     }
 }
 export const storeOrder = (order, address, lat, lng) => async (dispatch) => {
-    console.log(order , 'orderorderorderorder')
     dispatch({
         type: STORE_ORDER_REQUEST
     })
@@ -609,7 +615,7 @@ export const storeOrder = (order, address, lat, lng) => async (dispatch) => {
         const order_date = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate() 
         const order_time =  + currentdate.getHours() + ":"  + currentdate.getMinutes() + ":" + currentdate.getSeconds()
         const response = await API.storeOrder(order, order_date, order_time, address, lat, lng);
-        console.log(response?.data, 'ddddddddddddddd')
+        console.log(response?.data.Order.id, 'ddddddddddddddd')
         if (response?.data?.status?.status === "fail") {
             console.log(response?.data)
             dispatch(ToastActionsCreators.displayError(response?.data?.status?.message[0], 2000))
@@ -619,8 +625,12 @@ export const storeOrder = (order, address, lat, lng) => async (dispatch) => {
             await deviceStorage.saveItem('cart',JSON.stringify({'cart':[]}))
             dispatch({
                 type: STORE_ORDER_SUCCESS,
+                payload:{
+                    order_id:response?.data.Order.id
+                }
             })
-            navigate('Orders')
+            // Linking.openUR(url + 'stripe/'+response?.data.Order.id)
+            // navigate('Orders')
         }
         dispatch({ type: CLOSE_MODAL })
     } catch (err) {
@@ -742,47 +752,50 @@ export const hasPayment = () => async (dispatch) => {
         dispatch({ type: CLOSE_MODAL })
     }
 }
-export const confirmPayment = (showCard) => async (dispatch) => {
-    console.log('test')
-   dispatch({
-        type: HAS_PAYMENT_SUCCESS,
+export const addPayment = (stripeToken) => async (dispatch) => {
+    dispatch({
+        type: ADD_PAYMENT_REQUEST
+    })
+    dispatch({ type: SHOW_MODAL })
+    try {
+       const response = await API.addPayment(stripeToken);
+        if (response?.data?.status?.status === "fail") {
+            console.log(response?.data)
+            dispatch({
+                type: ADD_PAYMENT_SUCCESS,
+                payload:{
+                    showCard:false
+                }
+            })
+            dispatch(ToastActionsCreators.displayError(response?.data?.status?.message[0], 2000))
+        }
+        else {
+            dispatch(ToastActionsCreators.displayInfo(response?.data?.status?.message[0], 2000))
+            dispatch({
+                type: ADD_PAYMENT_SUCCESS,
+                payload:{
+                    showCard:false
+                }
+            })
+        }
+        dispatch({ type: CLOSE_MODAL })
+    } catch (err) {
+        console.log(err.message, 'err')
+        dispatch(ToastActionsCreators.displayError('Network Error', 2000))
+        dispatch({
+            type: ADD_PAYMENT_FAILURE,
+            payload:{
+                showCard:false
+            }
+        })
+        dispatch({ type: CLOSE_MODAL })
+    }
+}
+export const cancelPayment = () => async (dispatch) => {
+    dispatch({
+        type: ADD_PAYMENT_FAILURE,
         payload:{
             showCard:false
         }
-    }) 
-    
-    // dispatch({
-    //     type: HAS_PAYMENT_REQUEST
-    // })
-    // dispatch({ type: SHOW_MODAL })
-    // try {
-    //    const response = await API.hasPayment();
-    //     if (response?.data?.status?.status === "fail") {
-    //         console.log(response?.data)
-    //         dispatch({
-    //             type: HAS_PAYMENT_SUCCESS,
-    //             payload:{
-    //                 showCard:true
-    //             }
-    //         })
-            // dispatch(ToastActionsCreators.displayError(response?.data?.status?.message[0], 2000))
-    //     }
-    //     else {
-            // dispatch(ToastActionsCreators.displayInfo(response?.data?.status?.message[0], 2000))
-    //         dispatch({
-    //             type: HAS_PAYMENT_SUCCESS,
-    //             payload:{
-    //                 showCard:false
-    //             }
-    //         })
-    //     }
-    //     dispatch({ type: CLOSE_MODAL })
-    // } catch (err) {
-    //     console.log(err.message, 'err')
-        // dispatch(ToastActionsCreators.displayError('Network Error', 2000))
-    //     dispatch({
-    //         type: HAS_PAYMENT_FAILURE,
-    //     })
-    //     dispatch({ type: CLOSE_MODAL })
-    // }
+    })
 }

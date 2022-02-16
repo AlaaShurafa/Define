@@ -11,13 +11,13 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		16207C850E364481940E7977 /* Tajawal-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5982E7291364FF6A1C5F3CB /* Tajawal-Regular.ttf */; };
+		1E2B13D6B1AB4F4E9CE414AE /* Tajawal-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 50CD0CFB43E04732AC6CDE12 /* Tajawal-Bold.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		D4A4A83729FA408391C9DED7 /* Tajawal-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1DF70B270A04C96A028F731 /* Tajawal-Light.ttf */; };
 		DE9426094C35C914905FF860 /* libPods-define2-define2Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 863B8566EBDA2F8058466BED /* libPods-define2-define2Tests.a */; };
 		EA67F3464B5E2CFB20D7FA75 /* libPods-define2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5CDD5A7EE12A3EAA9807CD3 /* libPods-define2.a */; };
-		1E2B13D6B1AB4F4E9CE414AE /* Tajawal-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 50CD0CFB43E04732AC6CDE12 /* Tajawal-Bold.ttf */; };
-		D4A4A83729FA408391C9DED7 /* Tajawal-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1DF70B270A04C96A028F731 /* Tajawal-Light.ttf */; };
 		F8AE4AE4988C447180417A2B /* Tajawal-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0C43D87307B84596A82DE6D8 /* Tajawal-Medium.ttf */; };
-		16207C850E364481940E7977 /* Tajawal-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5982E7291364FF6A1C5F3CB /* Tajawal-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +34,7 @@
 		00E356EE1AD99517003FC87E /* define2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = define2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* define2Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = define2Tests.m; sourceTree = "<group>"; };
+		0C43D87307B84596A82DE6D8 /* Tajawal-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Tajawal-Medium.ttf"; path = "../src/assets/fonts/Tajawal-Medium.ttf"; sourceTree = "<group>"; };
 		0E670C33FF31462180A41D05 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		130E4C0A1D4544F082B0C646 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* define2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = define2.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -45,6 +46,7 @@
 		15BD608A53AD4AAD979C99A9 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		178D9D5F1BA74E25A2D635C4 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		1C840BADF95573B4AA81AAFF /* Pods-define2-define2Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-define2-define2Tests.debug.xcconfig"; path = "Target Support Files/Pods-define2-define2Tests/Pods-define2-define2Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		50CD0CFB43E04732AC6CDE12 /* Tajawal-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Tajawal-Bold.ttf"; path = "../src/assets/fonts/Tajawal-Bold.ttf"; sourceTree = "<group>"; };
 		5E694D5D9D624436AF4EBD45 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		6D22C9D85C0D40D1A0D387F4 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		6FF6412A93A6466D92FB2288 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
@@ -54,6 +56,8 @@
 		863B8566EBDA2F8058466BED /* libPods-define2-define2Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-define2-define2Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		93C1368735E045A1BA94C810 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		A0E39A7362144137BFFA817B /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		A1DF70B270A04C96A028F731 /* Tajawal-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Tajawal-Light.ttf"; path = "../src/assets/fonts/Tajawal-Light.ttf"; sourceTree = "<group>"; };
+		A5982E7291364FF6A1C5F3CB /* Tajawal-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Tajawal-Regular.ttf"; path = "../src/assets/fonts/Tajawal-Regular.ttf"; sourceTree = "<group>"; };
 		A8FEB108FF49498E4332248D /* Pods-define2-define2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-define2-define2Tests.release.xcconfig"; path = "Target Support Files/Pods-define2-define2Tests/Pods-define2-define2Tests.release.xcconfig"; sourceTree = "<group>"; };
 		B7B38714342565E2D4787591 /* Pods-define2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-define2.release.xcconfig"; path = "Target Support Files/Pods-define2/Pods-define2.release.xcconfig"; sourceTree = "<group>"; };
 		BCAFA0CC3D384678ADA7BDB7 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
@@ -64,10 +68,6 @@
 		F5CDD5A7EE12A3EAA9807CD3 /* libPods-define2.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-define2.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE499ACC111E4154A5EEA3F9 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		FF3BC18AC3A14721F1A3FEA4 /* Pods-define2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-define2.debug.xcconfig"; path = "Target Support Files/Pods-define2/Pods-define2.debug.xcconfig"; sourceTree = "<group>"; };
-		50CD0CFB43E04732AC6CDE12 /* Tajawal-Bold.ttf */ = {isa = PBXFileReference; name = "Tajawal-Bold.ttf"; path = "../src/assets/fonts/Tajawal-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		A1DF70B270A04C96A028F731 /* Tajawal-Light.ttf */ = {isa = PBXFileReference; name = "Tajawal-Light.ttf"; path = "../src/assets/fonts/Tajawal-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		0C43D87307B84596A82DE6D8 /* Tajawal-Medium.ttf */ = {isa = PBXFileReference; name = "Tajawal-Medium.ttf"; path = "../src/assets/fonts/Tajawal-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		A5982E7291364FF6A1C5F3CB /* Tajawal-Regular.ttf */ = {isa = PBXFileReference; name = "Tajawal-Regular.ttf"; path = "../src/assets/fonts/Tajawal-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,7 +211,6 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				49953200C62DAE0449219CB9 /* [CP] Embed Pods Frameworks */,
 				BF3E8E04DCB29D435D16F733 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -234,7 +233,6 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				F2A4155A1426399175845D9E /* [CP] Embed Pods Frameworks */,
 				3CEE80C79F43081C41AC43D3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -337,23 +335,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-define2/Pods-define2-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		49953200C62DAE0449219CB9 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-define2-define2Tests/Pods-define2-define2Tests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-define2-define2Tests/Pods-define2-define2Tests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-define2-define2Tests/Pods-define2-define2Tests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		56D94B2676121EC499B7D894 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -413,23 +394,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-define2-define2Tests/Pods-define2-define2Tests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F2A4155A1426399175845D9E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-define2/Pods-define2-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-define2/Pods-define2-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-define2/Pods-define2-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {

@@ -34,7 +34,7 @@ export default Header =({ title, backgroundColor=true, backBtn = false, style })
 }
 export const Header2 =({ title })=>{
     return(
-        <View style={[styles.rowView,{paddingBottom:20}, Platform.OS == 'ios' && {paddingTop:50}]}>
+        <View style={[styles.rowView,{paddingBottom:20}, Platform.OS == 'ios' ? {paddingTop:50}:{paddingTop:25}]}>
             <BackButton tintColor={Colors.Main_Color}/>
             <HeaderText style={styles.header}>{title}</HeaderText>
             <View style={{width:30, height:30}} />

@@ -83,7 +83,7 @@
         "orderDetails": "Oplysninger om ordre",
         "cancel_order": "Annuller ordre",
         "product_cost": "Omkostninger til produkter",
-        "product_tax": "Produktafgift",
+        "product_tax": "moms",
         "order_time": "Tidspunkt for bestilling",
         "delivered_date": "Leveringstidspunkt",
         "categories": "Kategorier",
@@ -141,6 +141,11 @@
         "ticketDetails": " Billet detaljer",
         "count": " Antal stk",
         "select_location": " Vælg et websted for at bekræfte ordren",
-        "shipmentNumber": " Leveringsnummer"
+        "shipmentNumber": " Leveringsnummer",
+        "cancel":"afbestille",
+        "no_tax":"Ekskl moms",
+        "shape":"form",
+        "odor":"lugt",
+        "size":"størrelse"
     }
 }

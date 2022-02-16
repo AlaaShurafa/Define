@@ -1,31 +1,32 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {ActivityIndicator, Modal, StyleSheet, View} from 'react-native';
 // import { CreditCardInput } from "react-native-credit-card-input";
 import Button from '../component/Button';
 import * as Colors from '../styles/Colors';
 import {useDispatch, useSelector} from 'react-redux';
-import {confirmPayment} from '../store/actions/app';
+import {addPayment, cancelPayment} from '../store/actions/app';
 import AppText from './AppText';
 import {CardField, useStripe} from '@stripe/stripe-react-native';
+import { translate } from '../translations/i18n';
 // import stripe from 'tipsi-stripe';
 
 export default CardForm = props => {
-
-// const token = await stripe.tokens.create({
-//   card: {
-//     number: '4242424242424242',
-//     exp_month: 1,
-//     exp_year: 2023,
-//     cvc: '314',
-//   },
-// });
+  // const token = await stripe.tokens.create({
+  //   card: {
+  //     number: '4242424242424242',
+  //     exp_month: 1,
+  //     exp_year: 2023,
+  //     cvc: '314',
+  //   },
+  // });
   const [form, setForm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [cardDetails, setCardDetails] = useState(false);
   const dispatch = useDispatch();
-  const {user, showCard} = useSelector(({auth, app}) => ({
+  const {loadingAddPayment, showCard} = useSelector(({auth, app}) => ({
     user: auth.user,
     showCard: app.showCard,
+    loadingAddPayment: app.loadingAddPayment,
     // showCard: true,
   }));
   const {createToken} = useStripe();
@@ -46,7 +47,20 @@ export default CardForm = props => {
 
     // })
     // console.log(token , 'token')
+    const token = await createToken({
+      type: 'Card',
+      // ...cardDetails
+    });
+    dispatch(addPayment(token.id));
+    console.log(token);
+    setLoading(false)
   };
+  useEffect(() => {
+    
+    return () => {
+      setCardDetails(false)
+    }
+  }, [])
   return (
     <Modal
       animationType="slide"
@@ -60,36 +74,33 @@ export default CardForm = props => {
             {borderRadius: 10, paddingBottom: 20},
           ]}>
           {/* <View > */}
-            <CardField
+          <CardField
             placeholderColor="red"
-              postalCodeEnabled={true}
-              placeholder={{
-                number: '4242 4242 4242 4242',
-                
-              }}
-              
-              textColor='black'
-              cardStyle={{
-                backgroundColor: '#FFFFFF',
-                textColor: '#000000',
-                borderWidth: 1,
-                borderColor: Colors.grey_Border,
-                placeholderColor:Colors.grey_Border
-                // borderRadius: 5,
-              }}
-              style={{
-                width: '100%',
-                height: 50,
-                marginVertical: 30,
-              }}
-              onCardChange={cardDetails => {
-                setCardDetails(cardDetails)
-                console.log('cardDetails', cardDetails);
-              }}
-              onFocus={focusedField => {
-                console.log('focusField', focusedField);
-              }}
-            />
+            postalCodeEnabled={true}
+            placeholder={{
+              number: '4242 4242 4242 4242',
+            }}
+            textColor="black"
+            cardStyle={{
+              backgroundColor: '#FFFFFF',
+              textColor: '#000000',
+              borderWidth: 1,
+              borderColor: Colors.grey_Border,
+              placeholderColor: Colors.grey_Border,
+              // borderRadius: 5,
+            }}
+            style={{
+              width: '100%',
+              height: 50,
+              marginVertical: 30,
+            }}
+            onCardChange={cardDetails => {
+              setCardDetails(cardDetails);
+            }}
+            onFocus={focusedField => {
+              console.log('focusField', focusedField);
+            }}
+          />
           {/* </View> */}
 
           <View
@@ -102,16 +113,28 @@ export default CardForm = props => {
               <Button
                 // onPress={() => form && props.onConfirm(form)}
                 onPress={makePayment}
+                disabled={!cardDetails.complete}
+                activity
                 buttonStyle={styles.button}>
-                confirm
+                {loading ? (
+                  <ActivityIndicator />
+                ) : (
+                  <AppText
+                    style={[
+                      {color: Colors.White, fontSize: 22},
+                    ]}
+                    semibold>
+                    {translate('app.confirm')}
+                  </AppText>
+                )}
               </Button>
             </View>
             <View style={{flex: 1, marginLeft: 16}}>
               <Button
                 outline
-                onPress={() => dispatch(confirmPayment(false))}
+                onPress={() => dispatch(cancelPayment())}
                 buttonStyle={styles.button}>
-                Cancel
+                {translate('app.cancel')}
               </Button>
             </View>
           </View>
@@ -135,7 +158,7 @@ const styles = StyleSheet.create({
     width: '95%',
     paddingTop: 40,
   },
-  button:{
-      height:50
-  }
+  button: {
+    height: 50,
+  },
 });

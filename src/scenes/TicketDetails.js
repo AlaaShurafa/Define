@@ -33,9 +33,11 @@ export default Tickets = ({navigation, route}) => {
   }, []);
   const sendResponse = async () => {
     try {
-      const res = await dispatch(responseTicket(ticket?.id, response));
-      console.log(res , 'res')
-      setTicket(res);
+      if(response){
+        const res = await dispatch(responseTicket(ticket?.id, response));
+        setTicket(res);
+      }
+      
     } catch (er) {
       null;
     }
@@ -138,6 +140,7 @@ const styles = StyleSheet.create({
       width: 1,
     },
     shadowOpacity: 0.1,
+    elevation:4,
     borderWidth: 0,
     paddingRight: 50,
     borderRadius: 20,

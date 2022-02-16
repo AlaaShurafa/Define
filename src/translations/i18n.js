@@ -39,17 +39,18 @@ export const setI18nConfig = () => {
       i18n.locale = language;
       i18n.translations = {[language]: translationGetters[language]()};
     } else {
-      deviceStorage.saveItem('lang','ar')
+      deviceStorage.saveItem('lang','da')
       // clear translation cache
       translate.cache.clear();
-      i18n.locale = 'ar';
-      i18n.translations = {['ar']: translationGetters['ar']()};
+      i18n.locale = 'da';
+      i18n.translations = {['da']: translationGetters['da']()};
 
       // update layout direction
-      I18nManager.forceRTL(true);
+      // I18nManager.forceRTL(true);
       // RNRestart.Restart();
     }
   });
 };
 // 
 // deviceStorage.removeItem('device_token')
+// deviceStorage.saveItem('lang','sv')

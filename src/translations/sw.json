@@ -83,7 +83,7 @@
         "orderDetails":"Orderdetaljer",
         "cancel_order": "Avbryt beställning",
         "product_cost":"Produkter kostar",
-        "product_tax":"Produktskatt",
+        "product_tax":"moms",
         "order_time":"Beställningstid",
         "delivered_date":"Leveranstid",
         "categories":"Kategorier",
@@ -120,7 +120,7 @@
         "nb": "Norwegian",
         "tr": "Turkic",
         "color":"Colors",
-        "quantity":"Quantity",
+        "quantity":"Kvantitet",
         "carton":"Carton",
         "pallet":"Pallet",
         "piece":"Piece",
@@ -141,6 +141,11 @@
         "ticketDetails": " Biljettinformation",
         "count": " Antal objekt",
         "select_location": " Välj en webbplats för att bekräfta beställningen",
-        "shipmentNumber": " Leveransnummer"
+        "shipmentNumber": " Leveransnummer",
+        "cancel":"annullera",
+        "no_tax":"Ekskl moms",
+        "shape":"form",
+        "odor":"odör",
+        "size":"storlek"
     }
 }

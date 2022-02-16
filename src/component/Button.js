@@ -11,7 +11,8 @@ const Button =(props)=>{
                 style={[
                         styles.button,
                         props.outline && styles.button_outline,
-                        props.buttonStyle
+                        props.buttonStyle,
+                        props.disabled && {backgroundColor:Colors.grey_Light, borderColor:Colors.grey_Light}
                     ]}>
 
                     {props.activity ? props.children : 

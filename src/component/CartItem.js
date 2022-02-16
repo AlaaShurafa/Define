@@ -5,6 +5,13 @@ import AppText from './AppText'
 import CountButton from './CountButtons';
 import { translate } from '../translations/i18n';
 export default Item = ({ style, item, onAdd, total,onMinus }) => {
+    let price = 0
+    if(item?.deliveryItem){
+        price = item?.price - parseFloat(item?.deliveryItem?.price)
+    }
+    else{
+        price = item?.price
+    }
     return (
         <View style={[styles.rowView, styles.rowCont, style]}>
             <View style={{ flexDirection: 'row', alignItems: 'center', flex: 3 }}>
@@ -14,7 +21,7 @@ export default Item = ({ style, item, onAdd, total,onMinus }) => {
                 <View style={{ justifyContent: 'space-between', alignItems: 'flex-start', flexShrink: 1 }}>
                     <AppText style={styles.title} semibold>{item?.name}</AppText>
                     <AppText style={styles.grey} semibold>{item?.size}</AppText>
-                    <AppText style={styles.orange} semibold>{`${item?.price?.toFixed(2)} ${translate('app.currency')}`}</AppText>
+                    <AppText style={styles.orange} semibold>{`${price.toFixed(2)} ${translate('app.currency')}`}</AppText>
                 </View>
             </View>
             <View style={{ flex: 1 }}>

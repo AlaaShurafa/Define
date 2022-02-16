@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Platform, Image, ScrollView, } from 'react-native';
 import { connect } from 'react-redux';
-import { Input, Button, HeaderText, BackButton, } from '../component';
+import { Input, Button, HeaderText, BackButton, Header2, } from '../component';
 import * as Colors from '../styles/Colors'
 import { translate } from '../translations/i18n';
 import { contactUsForm } from '../store/actions/app'
@@ -37,11 +37,12 @@ class ContactUs extends React.Component {
                     showsVerticalScrollIndicator={false}
                     style={{ flex: 1}}>
 
-                    <View style={[styles.rowView, Platform.OS == 'ios' && {paddingTop:35}]}>
+                    {/* <View style={[styles.rowView, Platform.OS == 'ios' && {paddingTop:35}]}>
                         <View style={{width:30}}/>
                         <HeaderText style={styles.header}>{translate('app.contact')}</HeaderText>
                         <BackButton tintColor={Colors.Main_Color} />
-                    </View>
+                    </View> */}
+                    <Header2 title={translate('app.contact')}/>
                     <Image source={require('../assets/images/contact.png')} style={{ alignSelf: 'center' }} />
                     <View>
                         <Input

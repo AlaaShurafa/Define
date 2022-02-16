@@ -141,6 +141,12 @@
         "ticketDetails": " Ticket details",
         "count": "Number of items",
         "select_location": " Choose a site to confirm the order",
-        "shipmentNumber": " Delivery number"
+        "shipmentNumber": " Delivery number",
+        "cancel":"Cancel",
+        "no_tax":"Excluding tax",
+        "shape":"Shape",
+        "odor":"Odor",
+        "size":"Size",
+        "pay":"Pay Now"
     }
 }

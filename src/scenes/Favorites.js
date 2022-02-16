@@ -18,7 +18,7 @@ export default Favorites = (props)=>{
     useEffect(()=>{
         getDataFav();
     },[isFocused])
-    console.log(favourites , 'favouries')
+    // console.log(favourites , 'favouries')
     return (
         <View style={styles.viewCont} >
            <StatusBar backgroundColor={Colors.White} animated={true} barStyle={"dark-content"}/>

@@ -8,7 +8,8 @@ import {
   StatusBar,
   ActivityIndicator,
   TouchableOpacity,
-  Alert
+  Alert,
+  Linking
 } from 'react-native';
 import {SwipeListView} from 'react-native-swipe-list-view';
 import {Button, Header2, AddButton, AppText} from '../component';
@@ -17,15 +18,17 @@ import {useSelector, useDispatch} from 'react-redux';
 import {getLocations, storeOrder, hasPayment} from '../store/actions/app';
 import {translate} from '../translations/i18n';
 import deviceStorage from '../services/deviceStorage';
+import {url} from '../services/config'
 
 export default Locations = ({navigation, route}) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
   const [activeLoc, setActiveLoc] = useState(null);
   const [lng, setLng] = useState('');
-  const {locations, loadingLocation} = useSelector(({app}) => ({
+  const {locations, loadingLocation,order_id} = useSelector(({app}) => ({
     locations: app.locations,
     loadingLocation: app.loadingLocation,
+    order_id: app.order_id,
   }));
   const getLocationsData = () => dispatch(getLocations());
   const storeCartOrder = (cart, address,lat, lng) => dispatch(storeOrder(cart, address,lat, lng));
@@ -52,15 +55,18 @@ export default Locations = ({navigation, route}) => {
               quantity: item?.quantity,
               color: item.color,
               option: item.option,
-              delivery_shopping_id: item?.delivery,
             });
+            if(item?.delivery) products[index].delivery_shopping_id = item?.delivery
             if (index === array.length - 1) resolve();
           });
         });
         foodPromise.then(async () => {
           const address = locations.find(item => item.id === activeLoc)
-          await dispatch(hasPayment())
-          // await storeCartOrder(products, address.address, address.lat, address.lng);
+          // await dispatch(hasPayment())
+          // Linking.openURL(url + 'stripe/'+223)
+
+          await storeCartOrder(products, address.address, address.lat, address.lng);
+          Linking.openURL(url + 'stripe/'+order_id)
         });
       }
     } else {
